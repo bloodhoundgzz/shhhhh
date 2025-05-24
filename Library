@@ -2973,7 +2973,7 @@ function Library:CreateWindow(...)
                 Image = 'http://www.roblox.com/asset/?id=4996891970';
                 ImageColor3 = Library.AccentColor;
                 Size = UDim2.new(612, 666);
-                Position = UDim2.new(0.5, -305, 0.5, -305);
+                Position = UDim2.new(175, 50);
                 ZIndex = 0;
                 Parent = Outer;
             });
