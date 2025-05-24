@@ -1439,6 +1439,11 @@ do
                 ZIndex = 5;
             });
 
+        local Corner = Library:Create('UICorner', {
+                CornerRadius = UDim.new(0, 4);
+                Parent = Outer;
+            });
+
             local Inner = Library:Create('Frame', {
                 BackgroundColor3 = Library.MainColor;
                 BorderColor3 = Library.OutlineColor;
@@ -1842,6 +1847,11 @@ do
             Parent = Container;
         });
 
+        local Corner = Library:Create('UICorner', {
+                CornerRadius = UDim.new(0, 4);
+                Parent = ToggleOuter;
+         });
+
         Library:AddToRegistry(ToggleOuter, {
             BorderColor3 = 'Black';
         });
@@ -1998,6 +2008,11 @@ do
             ZIndex = 5;
             Parent = Container;
         });
+
+        local Corner = Library:Create('UICorner', {
+                CornerRadius = UDim.new(0, 4);
+                Parent = SliderOuter;
+         });
 
         Library:AddToRegistry(SliderOuter, {
             BorderColor3 = 'Black';
