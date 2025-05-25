@@ -33,14 +33,14 @@ local Library = {
     HudRegistry = {};
 
     FontColor = Color3.fromRGB(255, 255, 255);
-    MainColor = Color3.fromRGB(35, 35, 48);
-    BackgroundColor = Color3.fromRGB(35, 30, 45);
-    AccentColor = Color3.fromRGB(85, 155, 180);
-    OutlineColor = Color3.fromRGB(55, 50, 70);
-    RiskColor = Color3.fromRGB(182, 182, 101),
+    MainColor = Color3.fromRGB(28, 28, 28);
+    BackgroundColor = Color3.fromRGB(20, 20, 20);
+    AccentColor = Color3.fromRGB(106,90,205);
+    OutlineColor = Color3.fromRGB(50, 50, 50);
+    RiskColor = Color3.fromRGB(255, 50, 50),
 
     Black = Color3.new(0, 0, 0);
-    Font = Enum.Font.RobotoMono;
+    Font = Enum.Font.RobotoMono; --41,
 
     OpenedFrames = {};
     DependencyBoxes = {};
@@ -2829,10 +2829,11 @@ do
     }, true);
 
     local KeybindLabel = Library:CreateLabel({
-        Size = UDim2.new(1, 0, 0, 18);
+        Size = UDim2.new(1, 0, 0, 20);
         Position = UDim2.fromOffset(5, 2),
-        TextXAlignment = Enum.TextXAlignment.Center,
-        Text = '[ Keybind ]';
+        TextXAlignment = Enum.TextXAlignment.Left,
+
+        Text = 'Keybinds';
         ZIndex = 104;
         Parent = KeybindInner;
     });
@@ -3017,7 +3018,7 @@ function Library:CreateWindow(...)
         Config.Size.Y.Scale, 
         Config.Size.Y.Offset + 57
     );
-    local Glow = Library:Create('ImageLabel', {
+    local Image = Library:Create('ImageLabel', {
         AnchorPoint = Config.AnchorPoint, 
         BackgroundTransparency = 1,
         Position = Config.Position,
