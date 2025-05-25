@@ -19,7 +19,6 @@ local ScreenGui = Instance.new('ScreenGui');
 
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global;
 ScreenGui.Parent = CoreGui;
-ScreenGui.ResetOnSpawn = false
 
 local Toggles = {};
 local Options = {};
@@ -33,12 +32,12 @@ local Library = {
 
     HudRegistry = {};
 
-    FontColor = Color3.fromRGB(230, 230, 230);
-    MainColor = Color3.fromRGB(35, 35, 48);
-    BackgroundColor = Color3.fromRGB(30, 25, 40);
-    AccentColor = Color3.fromRGB(90, 140, 170);
-    OutlineColor = Color3.fromRGB(55, 50, 65);
-    RiskColor = Color3.fromRGB(182, 182, 101),
+    FontColor = Color3.fromRGB(255, 255, 255);
+    MainColor = Color3.fromRGB(28, 28, 28);
+    BackgroundColor = Color3.fromRGB(20, 20, 20);
+    AccentColor = Color3.fromRGB(106,90,205);
+    OutlineColor = Color3.fromRGB(50, 50, 50);
+    RiskColor = Color3.fromRGB(255, 50, 50),
 
     Black = Color3.new(0, 0, 0);
     Font = Enum.Font.RobotoMono;
@@ -644,7 +643,7 @@ do
             Position = UDim2.fromOffset(5, 5);
             TextXAlignment = Enum.TextXAlignment.Left;
             TextSize = 14;
-            Text = ColorPicker.Title,--Info.Default;
+            Text = ColorPicker.Title;
             TextWrapped = false;
             ZIndex = 16;
             Parent = PickerFrameInner;
@@ -2980,7 +2979,7 @@ function Library:CreateWindow(...)
         Config.Size.Y.Scale, 
         Config.Size.Y.Offset + 57
     );
-    local Shadow = Library:Create('ImageLabel', {
+    local Glow = Library:Create('ImageLabel', {
         AnchorPoint = Config.AnchorPoint, 
         BackgroundTransparency = 1,
         Position = Config.Position,
@@ -3024,7 +3023,7 @@ function Library:CreateWindow(...)
         ZIndex = 1;
         Parent = Inner;
         RichText = true;
-        --BackgroundTransparency = 0;
+        --BackgroundTransparency = 1;
     });
 
     local MainSectionOuter = Library:Create('Frame', {
