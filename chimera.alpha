@@ -24,6 +24,14 @@ local drawing = loadstring(game:HttpGet("https://raw.githubusercontent.com/blood
 local tween = loadstring(game:HttpGet("https://raw.githubusercontent.com/bloodhoundgzz/Other-Luas/refs/heads/main/Tween-UI"))() -- shhhh
 local signal = loadstring(game:HttpGet('https://raw.githubusercontent.com/bloodhoundgzz/Other-Luas/refs/heads/main/Signal-UI'))()
 
+local function aes_encrypt(data, key, nonce)
+    return crypt.encrypt(data, key, nonce, "aes-ctr")
+end
+
+local function aes_decrypt(data, key, nonce)
+    return crypt.decrypt(data, key, nonce, "aes-ctr")
+end
+
 -- library
 if not isfolder(settings.folder_name) then
     makefolder(settings.folder_name);
@@ -40,10 +48,11 @@ local images = {
     ['arrow_up'] = "https://ani.yt/Projects/furrydecapitator.rip/assetos/images/arrowup.png";
 }
 for i,v in next, images do
-    if not isfile(settings.folder_name..'/assets/'..i..'.ln') then
-        writefile(settings.folder_name..'/assets/'..i..'.ln', syn.crypt.custom.encrypt('aes-ctr',game:HttpGet(v),'4XGudgFuutoHUM2Ctwsq4YrQ','zP5JJWPSIbf5Xuuy'))
+    local p = settings.folder_name.."/assets/"..i..".ln"
+    if not isfile(p) then
+        writefile(p, aes_encrypt(game:HttpGet(v), "4XGudgFuutoHUM2Ctwsq4YrQ", "zP5JJWPSIbf5Xuuy"))
     end
-    images[i] = syn.crypt.custom.decrypt('aes-ctr',readfile(settings.folder_name..'/assets/'..i..'.ln'),'4XGudgFuutoHUM2Ctwsq4YrQ','zP5JJWPSIbf5Xuuy')
+    images[i] = aes_decrypt(readfile(p), "4XGudgFuutoHUM2Ctwsq4YrQ", "zP5JJWPSIbf5Xuuy")
 end
 local services = setmetatable({}, {
     __index = function(_, k)
