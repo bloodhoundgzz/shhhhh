@@ -11,7 +11,6 @@ if not LPH_OBFUSCATED then
 end;
 
 local RunService = game:GetService("RunService")
-local aes = require(path_to_aes_module)
 local settings = {
     folder_name = "anis private cracked";
     default_accent = Color3.fromRGB(255, 145, 240);
@@ -19,6 +18,14 @@ local settings = {
     drag_easying_direction = "Out";
     drag_time = 0.3;
 };
+
+local function aes_encrypt(data, key, nonce)
+    return crypt.encrypt(data, key, nonce, "aes-ctr")
+end
+
+local function aes_decrypt(data, key, nonce)
+    return crypt.decrypt(data, key, nonce, "aes-ctr")
+end
 
 local drawing = loadstring(game:HttpGet("https://raw.githubusercontent.com/bloodhoundgzz/Other-Luas/refs/heads/main/Drawing-UI"))();
 local tween = loadstring(game:HttpGet("https://raw.githubusercontent.com/bloodhoundgzz/Other-Luas/refs/heads/main/Tween-UI"))();
@@ -39,18 +46,11 @@ local images = {
     ['arrow_up'] = "https://raw.githubusercontent.com/oogx/Roblox/main/Uis/Drawing/DeadCell/Assets/Images/Up.png";
 }
 for i,v in next, images do
-    local key = "4XGudgFuutoHUM2Ctwsq4YrQ"
-    local iv = "zP5JJWPSIbf5Xuuy"
-    local filePath = settings.folder_name..'/assets/'..i..'.ln'
-    
-    if not isfile(filePath) then
-        local data = game:HttpGet(v)
-        local encrypted = aes.encrypt_ctr(data, key, iv)
-        writefile(filePath, encrypted)
+    local p = settings.folder_name.."/assets/"..i..".ln"
+    if not isfile(p) then
+        writefile(p, aes_encrypt(game:HttpGet(v), "4XGudgFuutoHUM2Ctwsq4YrQ", "zP5JJWPSIbf5Xuuy"))
     end
-    
-    local encryptedData = readfile(filePath)
-    images[i] = aes.decrypt_ctr(encryptedData, key, iv)
+    images[i] = aes_decrypt(readfile(p), "4XGudgFuutoHUM2Ctwsq4YrQ", "zP5JJWPSIbf5Xuuy")
 end
 local services = setmetatable({}, {
     __index = function(_, k)
