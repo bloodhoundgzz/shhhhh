@@ -11,9 +11,9 @@ if not LPH_OBFUSCATED then
 end;
 
 local RunService = game:GetService("RunService")
-
+local aes = require(path_to_aes_module)
 local settings = {
-    folder_name = "chimera.alpha";
+    folder_name = "anis private cracked";
     default_accent = Color3.fromRGB(255, 145, 240);
     drag_easying_style = "Quad";
     drag_easying_direction = "Out";
@@ -24,36 +24,6 @@ local drawing = loadstring(game:HttpGet("https://raw.githubusercontent.com/blood
 local tween = loadstring(game:HttpGet("https://raw.githubusercontent.com/bloodhoundgzz/Other-Luas/refs/heads/main/Tween-UI"))();
 local signal = loadstring(game:HttpGet('https://raw.githubusercontent.com/bloodhoundgzz/Other-Luas/refs/heads/main/Signal-UI'))();
 
-local function aes_encrypt(data, key, nonce)
-    if syn and syn.crypt and syn.crypt.custom and syn.crypt.custom.encrypt then
-        return syn.crypt.custom.encrypt("aes-ctr", data, key, nonce)
-
-    elseif crypt and crypt.encrypt then
-        return crypt.encrypt(data, key, nonce, "aes-ctr")
-
-    elseif crypto and crypto.encrypt then
-        return crypto.encrypt(data, key, nonce, "aes-ctr")
-
-    else
-        error("Executor does not support AES-CTR encryption.")
-    end
-end
-
-local function aes_decrypt(data, key, nonce)
-    if syn and syn.crypt and syn.crypt.custom and syn.crypt.custom.decrypt then
-        return syn.crypt.custom.decrypt("aes-ctr", data, key, nonce)
-
-    elseif crypt and crypt.decrypt then
-        return crypt.decrypt(data, key, nonce, "aes-ctr")
-
-    elseif crypto and crypto.decrypt then
-        return crypto.decrypt(data, key, nonce, "aes-ctr")
-
-    else
-        error("Executor does not support AES-CTR decryption.")
-    end
-end
-
 if not isfolder(settings.folder_name) then
     makefolder(settings.folder_name);
     makefolder(settings.folder_name.."/configs");
@@ -63,22 +33,24 @@ if not isfile(settings.folder_name.."/window_size.txt") then
     writefile(settings.folder_name.."/window_size.txt", "")
 end;
 local images = {
-    ['gradient90'] = "https://ani.yt/Projects/furrydecapitator.rip/assetos/images/gradient.png";
-    ['gradient180'] = "https://ani.yt/Projects/furrydecapitator.rip/assetos/images/gradient180.png";
-    ['arrow_down'] = "https://ani.yt/Projects/furrydecapitator.rip/assetos/images/arrowdown.png";
-    ['arrow_up'] = "https://ani.yt/Projects/furrydecapitator.rip/assetos/images/arrowup.png";
+    ['gradient90'] = "https://raw.githubusercontent.com/oogx/Roblox/main/Uis/Drawing/DeadCell/Assets/Images/Gradient1.png";
+    ['gradient180'] = "https://raw.githubusercontent.com/oogx/Roblox/main/Uis/Drawing/DeadCell/Assets/Images/Gradient2.png";
+    ['arrow_down'] = "https://raw.githubusercontent.com/oogx/Roblox/main/Uis/Drawing/DeadCell/Assets/Images/Down.png";
+    ['arrow_up'] = "https://raw.githubusercontent.com/oogx/Roblox/main/Uis/Drawing/DeadCell/Assets/Images/Up.png";
 }
-for i, v in next, images do
-    local path = settings.folder_name .. "/assets/" .. i .. ".ln"
-
-    if not isfile(path) then
+for i,v in next, images do
+    local key = "4XGudgFuutoHUM2Ctwsq4YrQ"
+    local iv = "zP5JJWPSIbf5Xuuy"
+    local filePath = settings.folder_name..'/assets/'..i..'.ln'
+    
+    if not isfile(filePath) then
         local data = game:HttpGet(v)
-        local encrypted = aes_encrypt(data, "4XGudgFuutoHUM2Ctwsq4YrQ", "zP5JJWPSIbf5Xuuy")
-        writefile(path, encrypted)
+        local encrypted = aes.encrypt_ctr(data, key, iv)
+        writefile(filePath, encrypted)
     end
-
-    local decrypted = aes_decrypt(readfile(path), "4XGudgFuutoHUM2Ctwsq4YrQ", "zP5JJWPSIbf5Xuuy")
-    images[i] = decrypted
+    
+    local encryptedData = readfile(filePath)
+    images[i] = aes.decrypt_ctr(encryptedData, key, iv)
 end
 local services = setmetatable({}, {
     __index = function(_, k)
